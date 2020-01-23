@@ -1,0 +1,23 @@
+{
+  "name": "dott",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Stencil App Starter",
+  "scripts": {
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate"
+  },
+  "dependencies": {
+    "@stencil/core": "^1.8.4",
+    "@stencil/router": "^1.0.1",
+    "axios": "^0.19.1",
+    "slick-carousel": "^1.8.1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@stencil/sass": "^1.1.1"
+  }
+}

@@ -1,0 +1,96 @@
+.dt-search-bar {
+  display: flex;
+  align-items: center;
+
+  &__input-container {
+    border-bottom: 2px solid #282828;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    display: inline;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 0;
+    outline: none;
+  }
+
+  &__search-icon {
+    display: inline-block;
+    stroke: #999999;
+    cursor: pointer;
+  }
+
+  &__mic-icon {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    fill: black;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0 20px;
+
+    .mic-icon {
+      z-index: 1;
+      position: absolute;
+    }
+
+    &--recording {
+      fill: rgb(201, 50, 50);
+    }
+  }
+
+  .outer, .outer-2 {
+    width: 30px;
+    height: 30px;
+    transform: scale(1);
+    border-radius: 100%;
+    position: absolute;
+    top: -2px;
+    left: -4px;
+    background-color: transparent;
+    border: 1px solid #7f8c8d;
+    transition: all 1.5s ease;
+    animation: woong 1.5s infinite;
+  }
+
+  .outer-2 {
+    background-color: #bdc3c7;
+    animation: woong-2 1.5s infinite;
+    animation-delay: .5s;
+  }
+
+  @keyframes woong {
+    0% {
+      trasform: scale(1.2);
+    }
+    50% {
+      transform: scale(1.8);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+
+  @keyframes woong-2 {
+    0% {
+      transform: scale(1.2);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.6);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(2);
+      opacity: 0.6;
+    }
+  }
+}

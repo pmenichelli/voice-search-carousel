@@ -1,0 +1,13 @@
+.app-home {
+  padding: 10px;
+
+  .carousel-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    .carousel {
+      width: 430px;
+    }
+  }
+}

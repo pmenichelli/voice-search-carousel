@@ -1,0 +1,16 @@
+header {
+  padding: 10px 0;
+  background: #9bf3db;
+  color: black;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: black;
+  padding: 0 12px;
+}
