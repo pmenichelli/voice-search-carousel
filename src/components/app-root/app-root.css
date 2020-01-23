@@ -5,6 +5,7 @@ header {
   height: 56px;
   display: flex;
   align-items: center;
+  justify-content: start;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 
@@ -13,4 +14,5 @@ h1 {
   font-weight: 500;
   color: black;
   padding: 0 12px;
+  margin-right: 50px;
 }

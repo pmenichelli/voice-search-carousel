@@ -25,11 +25,11 @@ export class LangSelector {
   }
 
   render() {
-    const dialectClasses = `dt-lang-selector__language ${this.hideDialect ? 'dt-lang-selector__language--hidden' : ''}`
+    const dialectClasses = `dt-lang-selector__input dt-lang-selector__dialect ${this.hideDialect ? 'dt-lang-selector__dialect--hidden' : ''}`
     return (
       <div class='dt-lang-selector'>
         <select
-          class='dt-lang-selector__language'
+          class='dt-lang-selector__input dt-lang-selector__language'
           ref={(element) => (this.languageSelectElement = element)}
           onChange={this.onLanguageChange}>
         </select>

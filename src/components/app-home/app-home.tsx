@@ -21,10 +21,12 @@ export class AppHome {
   render() {
     return (
       <div class='app-home'>
-        <dt-lang-selector></dt-lang-selector>
-        <dt-search-bar lang={this.lang}></dt-search-bar>
 
-        <h2>Books Galery</h2>
+        <div class='top-bar'>
+          <dt-search-bar lang={this.lang}></dt-search-bar>
+          <dt-lang-selector></dt-lang-selector>
+        </div>
+
         <p>{this.renderSubTitle()}</p>
 
         <div class='carousel-container'>
@@ -46,10 +48,6 @@ export class AppHome {
             }
           </dt-lazy-carousel>
         </div>
-
-        <stencil-route-link url='/typescript-function'>
-          <dott-button text='Typescript fn'></dott-button>
-        </stencil-route-link>
       </div>
     );
   }
