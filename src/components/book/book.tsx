@@ -2,14 +2,13 @@ import { h, Component } from '@stencil/core';
 
 @Component({
 	shadow: true,
-	styleUrl: './card-content.scss',
-	tag: 'dt-card-content',
+	styleUrl: './book.scss',
+	tag: 'dt-book',
 })
-export class DottCardContent {
+export class DottBook {
 	protected render(): unknown {
 		return (
-			<div class='dt-card-content'>
-				<slot />
+			<div class='dt-book'>
 			</div>
 		);
 	}

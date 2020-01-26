@@ -11,7 +11,7 @@ class BooksService {
     .then(function (response: any) {
       // handle success
       // console.log({response});
-      return response.data.docs.slice(0, 15);
+      return response.data.docs.slice(0, 5);
     })
     .catch(function (error) {
       // handle error

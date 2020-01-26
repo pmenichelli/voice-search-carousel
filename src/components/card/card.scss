@@ -1,15 +1,31 @@
 $card-border-radius: 5px;
 
-:host(dt-card) {
-	display: block;
 
-	.dt-card {
-		background-color: white;
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-		// color: var(--dt-text-color);
+  .dt-card {
+    background-color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    // color: var(--dt-text-color);
 
-		// @include dt-media-breakpoint-up('sm') {
-		// 	border-radius: $card-border-radius;
-		// }
-	}
-}
+    // @include dt-media-breakpoint-up('sm') {
+    //   border-radius: $card-border-radius;
+    // }
+
+    &__header {
+      color: #666;
+      font: 'gelion';
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1.6;
+      padding: 16px 16px 16px 4px;
+      display: block;
+      overflow: hidden;
+      padding: 16px 16px 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &__content {
+      padding: 16px;
+    }
+  }

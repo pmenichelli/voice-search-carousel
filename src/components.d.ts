@@ -17,13 +17,15 @@ export namespace Components {
   interface DottButton {
     'text': string;
   }
-  interface DtCard {}
-  interface DtCardContent {}
-  interface DtCardHeader {
+  interface DtBook {}
+  interface DtCard {
     'header': string;
   }
+  interface DtCarousel {
+    'books': any[];
+    'slidesToShow': number;
+  }
   interface DtLangSelector {}
-  interface DtLazyCarousel {}
   interface DtSearchBar {
     'lang': string;
   }
@@ -53,34 +55,28 @@ declare global {
     new (): HTMLDottButtonElement;
   };
 
+  interface HTMLDtBookElement extends Components.DtBook, HTMLStencilElement {}
+  var HTMLDtBookElement: {
+    prototype: HTMLDtBookElement;
+    new (): HTMLDtBookElement;
+  };
+
   interface HTMLDtCardElement extends Components.DtCard, HTMLStencilElement {}
   var HTMLDtCardElement: {
     prototype: HTMLDtCardElement;
     new (): HTMLDtCardElement;
   };
 
-  interface HTMLDtCardContentElement extends Components.DtCardContent, HTMLStencilElement {}
-  var HTMLDtCardContentElement: {
-    prototype: HTMLDtCardContentElement;
-    new (): HTMLDtCardContentElement;
-  };
-
-  interface HTMLDtCardHeaderElement extends Components.DtCardHeader, HTMLStencilElement {}
-  var HTMLDtCardHeaderElement: {
-    prototype: HTMLDtCardHeaderElement;
-    new (): HTMLDtCardHeaderElement;
+  interface HTMLDtCarouselElement extends Components.DtCarousel, HTMLStencilElement {}
+  var HTMLDtCarouselElement: {
+    prototype: HTMLDtCarouselElement;
+    new (): HTMLDtCarouselElement;
   };
 
   interface HTMLDtLangSelectorElement extends Components.DtLangSelector, HTMLStencilElement {}
   var HTMLDtLangSelectorElement: {
     prototype: HTMLDtLangSelectorElement;
     new (): HTMLDtLangSelectorElement;
-  };
-
-  interface HTMLDtLazyCarouselElement extends Components.DtLazyCarousel, HTMLStencilElement {}
-  var HTMLDtLazyCarouselElement: {
-    prototype: HTMLDtLazyCarouselElement;
-    new (): HTMLDtLazyCarouselElement;
   };
 
   interface HTMLDtSearchBarElement extends Components.DtSearchBar, HTMLStencilElement {}
@@ -98,11 +94,10 @@ declare global {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
     'dott-button': HTMLDottButtonElement;
+    'dt-book': HTMLDtBookElement;
     'dt-card': HTMLDtCardElement;
-    'dt-card-content': HTMLDtCardContentElement;
-    'dt-card-header': HTMLDtCardHeaderElement;
+    'dt-carousel': HTMLDtCarouselElement;
     'dt-lang-selector': HTMLDtLangSelectorElement;
-    'dt-lazy-carousel': HTMLDtLazyCarouselElement;
     'dt-search-bar': HTMLDtSearchBarElement;
     'typescript-fn': HTMLTypescriptFnElement;
   }
@@ -116,16 +111,18 @@ declare namespace LocalJSX {
   interface DottButton {
     'text'?: string;
   }
-  interface DtCard {}
-  interface DtCardContent {}
-  interface DtCardHeader {
+  interface DtBook {}
+  interface DtCard {
     'header'?: string;
+  }
+  interface DtCarousel {
+    'books'?: any[];
+    'slidesToShow'?: number;
   }
   interface DtLangSelector {
     'onDtDialectChange'?: (event: CustomEvent<any>) => void;
     'onDtLanguageChange'?: (event: CustomEvent<any>) => void;
   }
-  interface DtLazyCarousel {}
   interface DtSearchBar {
     'lang'?: string;
     'onDtQueryChange'?: (event: CustomEvent<any>) => void;
@@ -138,11 +135,10 @@ declare namespace LocalJSX {
     'app-home': AppHome;
     'app-root': AppRoot;
     'dott-button': DottButton;
+    'dt-book': DtBook;
     'dt-card': DtCard;
-    'dt-card-content': DtCardContent;
-    'dt-card-header': DtCardHeader;
+    'dt-carousel': DtCarousel;
     'dt-lang-selector': DtLangSelector;
-    'dt-lazy-carousel': DtLazyCarousel;
     'dt-search-bar': DtSearchBar;
     'typescript-fn': TypescriptFn;
   }
@@ -157,11 +153,10 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'dott-button': LocalJSX.DottButton & JSXBase.HTMLAttributes<HTMLDottButtonElement>;
+      'dt-book': LocalJSX.DtBook & JSXBase.HTMLAttributes<HTMLDtBookElement>;
       'dt-card': LocalJSX.DtCard & JSXBase.HTMLAttributes<HTMLDtCardElement>;
-      'dt-card-content': LocalJSX.DtCardContent & JSXBase.HTMLAttributes<HTMLDtCardContentElement>;
-      'dt-card-header': LocalJSX.DtCardHeader & JSXBase.HTMLAttributes<HTMLDtCardHeaderElement>;
+      'dt-carousel': LocalJSX.DtCarousel & JSXBase.HTMLAttributes<HTMLDtCarouselElement>;
       'dt-lang-selector': LocalJSX.DtLangSelector & JSXBase.HTMLAttributes<HTMLDtLangSelectorElement>;
-      'dt-lazy-carousel': LocalJSX.DtLazyCarousel & JSXBase.HTMLAttributes<HTMLDtLazyCarouselElement>;
       'dt-search-bar': LocalJSX.DtSearchBar & JSXBase.HTMLAttributes<HTMLDtSearchBarElement>;
       'typescript-fn': LocalJSX.TypescriptFn & JSXBase.HTMLAttributes<HTMLTypescriptFnElement>;
     }

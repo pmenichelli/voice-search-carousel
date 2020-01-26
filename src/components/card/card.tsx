@@ -1,4 +1,4 @@
-import { h, Component } from '@stencil/core';
+import { h, Component, Prop } from '@stencil/core';
 
 @Component({
 	shadow: true,
@@ -6,10 +6,16 @@ import { h, Component } from '@stencil/core';
 	tag: 'dt-card',
 })
 export class DottCard {
+
+  @Prop() public header: string;
+
 	protected render(): unknown {
 		return (
 			<div class='dt-card'>
-				<slot />
+				<div class='dt-card__header'>{this.header}</div>
+        <div class='dt-card__content'>
+          <slot />
+        </div>
 			</div>
 		);
 	}

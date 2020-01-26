@@ -30,23 +30,8 @@ export class AppHome {
         <p>{this.renderSubTitle()}</p>
 
         <div class='carousel-container'>
-          <dt-lazy-carousel class='carousel'>
-            {
-              this.books.map((book, index) => {
-                return <div class='dt-carousel__slide'>
-                  <dt-card  key={book.key}>
-                    <dt-card-header header={'My new book'}></dt-card-header>
-                    <dt-card-content>
-                      {index} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum lobortis libero
-                      non euismod imperdiet. Nam vulputate ante eros, id viverra est rhoncus sit amet.
-                      Donec iaculis, ligula ut interdum scelerisque, lacus nibh porta lectus, vitae
-                      commodo nunc massa commodo ipsum. Maecenas et commodo dui, facilisis pulvinar quam.
-                    </dt-card-content>
-                  </dt-card>
-                </div>
-              })
-            }
-          </dt-lazy-carousel>
+          <dt-carousel class='carousel' books={this.books}>
+          </dt-carousel>
         </div>
       </div>
     );
@@ -62,9 +47,9 @@ export class AppHome {
 
   private searchBooks(query: string) {
     return this.booksService.search(query)
-      .then(docs => {
+      .then((docs: []) => {
         this.books = docs;
-        console.log('updated books', this.books)
+        console.log('updated books', this.books);
       });
   }
 
