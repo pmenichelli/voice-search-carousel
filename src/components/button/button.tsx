@@ -8,7 +8,7 @@ import { Component, h, Prop } from '@stencil/core';
 export class DottButton {
   @Prop() text: string = '';
 
-  render() {
+  protected render() {
     return (
         <button>
             {this.text}

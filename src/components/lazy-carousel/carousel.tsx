@@ -23,7 +23,7 @@ export class DottLazyCarousel {
   @Prop() public books = [];
   @Prop() public slidesToShow: number = 1;
 
-  componentDidUpdate() {
+  protected componentDidUpdate() {
     this.updateLayout();
   }
 
@@ -53,7 +53,7 @@ export class DottLazyCarousel {
     );
   }
 
-  private renderBooks(): any {
+  protected renderBooks(): any {
     if (!this.books || !this.books.length) {
       return null;
     }
@@ -75,7 +75,7 @@ export class DottLazyCarousel {
     })
   }
 
-  private animate() {
+  protected animate() {
     const carouselSpeed = 158; // pixels per second
     const animationTime = (this.slideWidth + this.slideGap) * (this.slides.length) / carouselSpeed;
 
@@ -108,11 +108,11 @@ export class DottLazyCarousel {
     this.element.shadowRoot.prepend(animationElement);
   }
 
-  private init() {
+  protected init() {
     this.animate();
   }
 
-  private updateLayout() {
+  protected updateLayout() {
     const slideElements = Array.from(this.element.shadowRoot.querySelectorAll('.dt-carousel__slide')) as HTMLElement[];
     if (!slideElements.length) {
       return;
@@ -127,17 +127,17 @@ export class DottLazyCarousel {
   }
 
   @Listen('visibilitychange', { target: 'document' })
-  private handleVisibilityChange() {
+  protected handleVisibilityChange() {
     this.looping = !document.hidden;
   }
 
   @Listen('mouseenter')
-  private onMouseEnter() {
+  protected onMouseEnter() {
     this.paused = true;
   }
 
   @Listen('mouseleave')
-  private onMouseLeave() {
+  protected onMouseLeave() {
     this.paused = false;
   }
 }

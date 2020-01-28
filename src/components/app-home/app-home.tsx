@@ -14,11 +14,11 @@ export class AppHome {
 
   @Prop() public slidesToShow = 3;
 
-  componentWillLoad() {
+  protected componentWillLoad() {
     return this.searchBooks('The Lord of the Rings');
   }
 
-  render() {
+  protected render() {
     return (
       <div class='app-home'>
 
@@ -35,7 +35,7 @@ export class AppHome {
     );
   }
 
-  private searchBooks(query: string) {
+  protected searchBooks(query: string) {
     return this.booksService.search(query)
       .then((docs: []) => {
         this.books = docs;
@@ -44,12 +44,12 @@ export class AppHome {
   }
 
   @Listen('dtDialectChange')
-  private onDialectChange(event: CustomEvent) {
+  protected onDialectChange(event: CustomEvent) {
     console.log('Lang change: ', event.detail);
   }
 
   @Listen('dtQueryChange')
-  private onSearchQueryChange(event: CustomEvent) {
+  protected onSearchQueryChange(event: CustomEvent) {
     this.searchBooks(event.detail);
     console.log('Query change: ', event.detail);
   }

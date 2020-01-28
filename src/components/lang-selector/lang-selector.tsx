@@ -20,11 +20,11 @@ export class LangSelector {
     this.onDialectChange = this.onDialectChange.bind(this);
   }
 
-  componentDidLoad() {
+  protected componentDidLoad() {
     this.initLanguage();
   }
 
-  render() {
+  protected render() {
     const dialectClasses = `dt-lang-selector__input dt-lang-selector__dialect ${this.hideDialect ? 'dt-lang-selector__dialect--hidden' : ''}`
     return (
       <div class='dt-lang-selector'>
@@ -42,7 +42,7 @@ export class LangSelector {
     );
   }
 
-  private initLanguage() {
+  protected initLanguage() {
     for (let i = 0; i < LANGS.length; i++) {
       this.languageSelectElement.options[i] = new Option(LANGS[i][0].toString(), String(i));
     }
@@ -51,7 +51,7 @@ export class LangSelector {
     this.dialectSelectElement.selectedIndex = DEFAULT_DIALECT;
   }
 
-  private updateDialects() {
+  protected updateDialects() {
     const { options } = this.dialectSelectElement;
     for (let i = options.length - 1; i >= 0; i--) {
       this.dialectSelectElement.remove(i);
@@ -65,12 +65,12 @@ export class LangSelector {
     this.dialectSelectElement.selectedIndex = 0;
   }
 
-  private onLanguageChange() {
+  protected onLanguageChange() {
     this.dtLanguageChange.emit(this.languageSelectElement.value);
     this.updateDialects();
   }
 
-  private onDialectChange() {
+  protected onDialectChange() {
     this.dtDialectChange.emit(this.dialectSelectElement.value);
   }
 }

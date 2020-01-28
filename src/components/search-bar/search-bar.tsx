@@ -30,7 +30,7 @@ export class SearchBar {
     this.onSpeechRecognitionResult = this.onSpeechRecognitionResult.bind(this);
   }
 
-  componentDidLoad() {
+  protected componentDidLoad() {
     this.speechRecognition = dtSpeechRecognition();
     if (!this.speechRecognition) {
       // TODO: Disable mic button cause no speech recognition API is available
@@ -42,7 +42,7 @@ export class SearchBar {
     }
   }
 
-  render() {
+  protected render() {
     const micIconCasses = `dt-search-bar__mic-icon ${this.recognizing ? 'dt-search-bar__mic-icon--recording' : ''}`
     return (
         <div class='dt-search-bar'>
@@ -63,7 +63,7 @@ export class SearchBar {
     );
   }
 
-  private recordMicInput(timeStamp) {
+  protected recordMicInput(timeStamp) {
     if (this.recognizing) {
       this.speechRecognition.stop();
       return;
@@ -75,12 +75,12 @@ export class SearchBar {
     this.startTimestamp = timeStamp;
   }
 
-  private capitalize(string: string) {
+  protected capitalize(string: string) {
     const firstCharRegex = /\S/;
     return string.replace(firstCharRegex, function(m) { return m.toUpperCase(); });
   }
 
-  private onMicButtonClick(event: Event) {
+  protected onMicButtonClick(event: Event) {
     navigator.mediaDevices.getUserMedia({ audio: true, video: false })
       .then((res) => {
         console.log({res});
@@ -88,20 +88,20 @@ export class SearchBar {
       });
   }
 
-  private onSearchButtonClick() {
+  protected onSearchButtonClick() {
     this.dtQueryChange.emit(this.query);
   }
 
-  private onInputChange(event: Event) {
+  protected onInputChange(event: Event) {
     this.query = (event.target as HTMLInputElement).value;
     this.dtQueryChange.emit(this.query);
   }
 
-  private onSpeechRecognitionStart = function() {
+  protected onSpeechRecognitionStart = function() {
     this.recognizing = true;
   };
 
-  private onSpeechRecognitionError = function(event) {
+  protected onSpeechRecognitionError = function(event) {
     if (event.error == 'no-speech') {
       console.warn('No speech was detected. You may need to adjust your microphone settings');
       this.ignoreOnend = true;
@@ -120,7 +120,7 @@ export class SearchBar {
     }
   };
 
-  private onSpeechRecognitionEnd = function() {
+  protected onSpeechRecognitionEnd = function() {
     this.recognizing = false;
     if (this.ignoreOnend) {
       return;
@@ -131,7 +131,7 @@ export class SearchBar {
     }
   };
 
-  private onSpeechRecognitionResult = function(event) {
+  protected onSpeechRecognitionResult = function(event) {
     let interimTranscript = '';
     for (var i = event.resultIndex; i < event.results.length; ++i) {
       if (event.results[i].isFinal) {
