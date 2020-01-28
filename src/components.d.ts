@@ -17,7 +17,10 @@ export namespace Components {
   interface DottButton {
     'text': string;
   }
-  interface DtBook {}
+  interface DtBook {
+    'coverId': string;
+    'title': string;
+  }
   interface DtCard {
     'header': string;
   }
@@ -111,7 +114,10 @@ declare namespace LocalJSX {
   interface DottButton {
     'text'?: string;
   }
-  interface DtBook {}
+  interface DtBook {
+    'coverId'?: string;
+    'title'?: string;
+  }
   interface DtCard {
     'header'?: string;
   }

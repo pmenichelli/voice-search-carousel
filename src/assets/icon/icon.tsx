@@ -2,7 +2,7 @@
 import { h } from '@stencil/core';
 
 export default {
-  search: (
+  search: () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="25"
@@ -19,7 +19,7 @@ export default {
       ></path>
     </svg>
   ),
-  mic: (
+  mic: () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="25"
@@ -35,7 +35,7 @@ export default {
       ></path>
     </svg>
   ),
-  chevronLeft: (
+  chevronLeft: () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="512"
@@ -48,7 +48,7 @@ export default {
       <path d="M352 115.4L331.3 96 160 256 331.3 416 352 396.7 201.5 256z"></path>
     </svg>
   ),
-  chevronRight: (
+  chevronRight: () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="512"

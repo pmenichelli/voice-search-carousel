@@ -8,37 +8,20 @@ import { h, Component, Element, Listen, State, Prop } from '@stencil/core';
 })
 export class DottLazyCarousel {
   private animationTime: number;          // time used to animate the carrousel, varies according to slides quantity
-  private threshold: number = 100;        // minimum distance the slider needs to move to change the slide that is displaying
-  private posX1: number = 0;              // stores the initial pos of mousedown/touchstart events
-  private posX2: number = 0;              // stores the final pos of mousedown/touchstart events
-  private posInitial;                     // stores the initial position of the carousel slider when a drag starts
-  private posFinal;                       // stores the final position of the carousel slider when a drag ends
   private slideGap = 0;                   // separation between slides
-  private slidesContainer: HTMLElement;
   private slideWidth: number;
   private firstSlide: HTMLElement;
-  private index = 0;
-  private allowShift: boolean = true;
   private slides = [];
+  private containerLeft: number = 0;
+  private containerWidth: string = '100%';
 
   @Element() private element: any;
 
-  @State() private loop: boolean = true;
+  @State() private looping: boolean = true;
+  @State() private paused: boolean = false;
 
   @Prop() public books = [];
   @Prop() public slidesToShow: number = 1;
-
-  constructor() {
-    this.onPreviousSlideClick = this.onPreviousSlideClick.bind(this);
-    this.onNextSlideClick = this.onNextSlideClick.bind(this);
-    this.dragStart = this.dragStart.bind(this);
-    this.dragAction = this.dragAction.bind(this);
-    this.dragEnd = this.dragEnd.bind(this);
-    this.checkIndex = this.checkIndex.bind(this);
-  }
-
-  componentWillUpdate() {
-  }
 
   componentDidUpdate() {
     this.updateLayout();
@@ -50,27 +33,22 @@ export class DottLazyCarousel {
   }
 
   protected render(): unknown {
-    const containerClasses = `dt-carousel__slides-container ${this.loop ? 'dt-carousel__slides-container--looping' : ''}`;
+    const containerClasses = `dt-carousel__slides-container
+      ${this.looping ? 'dt-carousel__slides-container--looping '  : ''}
+      ${this.paused ? 'dt-carousel__slides-container--paused ' : ''}
+    `;
     return (
       <div class='dt-carousel'>
-        <div class='dt-carousel__overflow'>
-          <div class='dt-carousel__wrapper'>
-            <div
-              class={containerClasses}
-              onTouchStart={this.dragStart}
-              onTouchMove={this.dragAction}
-              onTouchEnd={this.dragEnd}
-              onMouseDown={this.dragStart}
-              onTransitionEnd={this.checkIndex}
-            >
-              {
-                this.renderBooks()
-              }
-            </div>
+        <div class='dt-carousel__wrapper'>
+          <div
+            class={containerClasses}
+            style={{left: `${this.containerLeft}px`, width: this.containerWidth}}
+          >
+            {
+              this.renderBooks()
+            }
           </div>
         </div>
-        <a class='dt-carousel__prev-button' onClick={this.onPreviousSlideClick} />
-        <a class='dt-carousel__next-button' onClick={this.onNextSlideClick} />
       </div>
     );
   }
@@ -86,11 +64,12 @@ export class DottLazyCarousel {
 
     return this.slides.map(slide => {
       return (
-        <div class='dt-carousel__slide'>
-          <dt-card  key={slide.key} header={slide.title_suggest}>
-              <p>{slide.author_name[0]}</p>
-              <p>{slide.isbn[0]}</p>
-          </dt-card>
+        <div key={slide.key} class='dt-carousel__slide'>
+          <dt-book
+            title={slide.title_suggest}
+            coverId={slide.cover_i}
+          >
+          </dt-book>
         </div>
       )
     })
@@ -120,12 +99,16 @@ export class DottLazyCarousel {
       .dt-carousel__slides-container--looping {
         animation: slideshow ${animationTime}s linear infinite;
       }
+
+      @keyframes slideshow {
+        0%    { left: 0; }
+        100%  { left: -${this.books.length * (this.slideWidth + this.slideGap)}px; }
+      }
     `;
     this.element.shadowRoot.prepend(animationElement);
   }
 
   private init() {
-    this.slidesContainer = this.element.shadowRoot.querySelector('.dt-carousel__slides-container');
     this.animate();
   }
 
@@ -139,87 +122,22 @@ export class DottLazyCarousel {
 
     const style = window.getComputedStyle(this.firstSlide);
     this.slideGap = parseInt(style.marginLeft) + parseInt(style.marginRight);
-    this.slidesContainer.style.width = `${(this.slideWidth + this.slideGap) * this.books.length}px`;
+    this.containerWidth = `${(this.slideWidth + this.slideGap) * this.books.length}px`;
     this.animate();
-  }
-
-  private shiftSlide(dir: number, drag: boolean = false) {
-    this.slidesContainer.classList.add('dt-carousel__slide--shifting');
-    if (this.allowShift) {
-      if (!drag) {
-        this.posInitial = this.slidesContainer.offsetLeft;
-      }
-      if (dir == 1) {
-        this.slidesContainer.style.left =  `${this.posInitial - this.slideWidth}px`;
-        this.index++;
-      } else if (dir == -1) {
-        this.slidesContainer.style.left = `${this.posInitial + this.slideWidth}px`;
-        this.index--;
-      }
-    };
-    this.allowShift = false;
   }
 
   @Listen('visibilitychange', { target: 'document' })
   private handleVisibilityChange() {
-    this.loop = !document.hidden;
+    this.looping = !document.hidden;
   }
 
-  private dragStart(event) {
-    event.preventDefault();
-    this.posInitial = this.slidesContainer.offsetLeft;
-    if (event.type == 'touchstart') {
-      this.posX1 = event.touches[0].clientX;
-    } else {
-      this.posX1 = event.clientX;
-      document.onmouseup = this.dragEnd;
-      document.onmousemove = this.dragAction;
-    }
+  @Listen('mouseenter')
+  private onMouseEnter() {
+    this.paused = true;
   }
 
-  private dragAction(event) {
-    if (event.type == 'touchmove') {
-      this.posX2 = this.posX1 - event.touches[0].clientX;
-      this.posX1 = event.touches[0].clientX;
-    } else {
-      this.posX2 = this.posX1 - event.clientX;
-      this.posX1 = event.clientX;
-    }
-    this.slidesContainer.style.left = `${this.slidesContainer.offsetLeft - this.posX2}px`;
-  }
-
-  private dragEnd() {
-    this.posFinal = this.slidesContainer.offsetLeft;
-    const draggedDistance = this.posFinal - this.posInitial;
-    if (draggedDistance < -this.threshold) {
-      this.shiftSlide(1, true);
-    } else if (draggedDistance > this.threshold) {
-      this.shiftSlide(-1, true);
-    } else {
-      this.slidesContainer.style.left = `${this.posInitial}px`;
-    }
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-
-  private checkIndex (){
-    this.slidesContainer.classList.remove('dt-carousel__slide--shifting');
-    if (this.index == -1) {
-      this.slidesContainer.style.left = `${-(this.slides.length * this.slideWidth)}px`;
-      this.index = this.slides.length - 1;
-    }
-    if (this.index == this.slides.length) {
-      this.slidesContainer.style.left = `${-this.slideWidth}px`;
-      this.index = 0;
-    }
-    this.allowShift = true;
-  }
-
-  private onPreviousSlideClick() {
-    this.shiftSlide(-1);
-  }
-
-  private onNextSlideClick() {
-    this.shiftSlide(1);
+  @Listen('mouseleave')
+  private onMouseLeave() {
+    this.paused = false;
   }
 }

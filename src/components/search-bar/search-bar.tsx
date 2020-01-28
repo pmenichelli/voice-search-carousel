@@ -33,8 +33,7 @@ export class SearchBar {
   componentDidLoad() {
     this.speechRecognition = dtSpeechRecognition();
     if (!this.speechRecognition) {
-      // disable mic button
-      // start_img.src = 'mic-slash.gif';
+      // TODO: Disable mic button cause no speech recognition API is available
     } else {
       this.speechRecognition.onstart = this.onSpeechRecognitionStart;
       this.speechRecognition.onerror = this.onSpeechRecognitionError;
@@ -53,13 +52,12 @@ export class SearchBar {
               placeholder='Search books'
               value={this.query}
               onChange={this.onInputChange}/>
-            <div class='dt-search-bar__search-icon' onClick={this.onSearchButtonClick}>{ icons.search }</div>
+            <div class='dt-search-bar__search-icon' onClick={this.onSearchButtonClick}>{ icons.search() }</div>
           </div>
 
           <div class={micIconCasses} onClick={this.onMicButtonClick}>
-            { this.recognizing && <div class="outer"></div> }
-            { this.recognizing && <div class="outer-2"></div> }
-            <div class='mic-icon'>{icons.mic}</div>
+            { this.recognizing && <div><div class='outer' /><div class='outer-2' /></div> }
+            <div class='mic-icon'>{ icons.mic() }</div>
           </div>
         </div>
     );
@@ -95,31 +93,28 @@ export class SearchBar {
   }
 
   private onInputChange(event: Event) {
-    console.log(event);
     this.query = (event.target as HTMLInputElement).value;
+    this.dtQueryChange.emit(this.query);
   }
 
   private onSpeechRecognitionStart = function() {
     this.recognizing = true;
-    console.log('Speak now.');
   };
 
   private onSpeechRecognitionError = function(event) {
     if (event.error == 'no-speech') {
-      // start_img.src = 'mic.gif';
-      console.log('No speech was detected. You may need to adjust your microphone settings');
+      console.warn('No speech was detected. You may need to adjust your microphone settings');
       this.ignoreOnend = true;
     }
     if (event.error == 'audio-capture') {
-      // start_img.src = 'mic.gif';
-      console.log('No microphone was found. Ensure that a microphone is installed and that microphone settings are configured correctly.');
+      console.warn('No microphone was found. Ensure that a microphone is installed and that microphone settings are configured correctly.');
       this.ignoreOnend = true;
     }
     if (event.error == 'not-allowed') {
       if (event.timeStamp - this.startTimestamp < 100) {
         console.warn('Mic blocked');
       } else {
-        console.warn('mic denied');
+        console.warn('Mic denied');
       }
       this.ignoreOnend = true;
     }
@@ -130,7 +125,6 @@ export class SearchBar {
     if (this.ignoreOnend) {
       return;
     }
-    // start_img.src = 'mic.gif';
     if (!this.finalTranscript) {
       console.log('Click on the microphone icon and begin speaking.')
       return;

@@ -44,12 +44,18 @@
     top: 0;
   }
 
-  &__slide {
-    @include carousel-slide();
+  &__slides-container {
+    &--paused {
+      animation-play-state: paused;
+    }
 
     &--shifting {
       transition: left .2s ease-out;
     }
+  }
+
+  &__slide {
+    @include carousel-slide();
   }
 
   &__prev-button, &__next-button {
@@ -81,11 +87,6 @@
   &__prev-button:active, &__next-button:active {
     transform: scale(.8);
   }
-}
-
-@keyframes slideshow {
-  0%    { left: 0; }
-  100%  { left: -100%; }
 }
 
 @media screen and (min-width: 576px) {

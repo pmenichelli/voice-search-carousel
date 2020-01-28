@@ -27,22 +27,12 @@ export class AppHome {
           <dt-lang-selector></dt-lang-selector>
         </div>
 
-        <p>{this.renderSubTitle()}</p>
-
         <div class='carousel-container'>
           <dt-carousel class='carousel' books={this.books}>
           </dt-carousel>
         </div>
       </div>
     );
-  }
-
-  private renderSubTitle() {
-    if (this.books.length) {
-      return `Showing ${this.slidesToShow} of ${this.books.length} books.`;
-    }
-
-    return 'Nothing to show yet. Search some books!';
   }
 
   private searchBooks(query: string) {
