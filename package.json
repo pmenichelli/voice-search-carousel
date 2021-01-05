@@ -13,7 +13,7 @@
   "dependencies": {
     "@stencil/core": "^1.8.4",
     "@stencil/router": "^1.0.1",
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "slick-carousel": "^1.8.1"
   },
   "license": "MIT",
